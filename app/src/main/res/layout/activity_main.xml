@@ -1,25 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_layout"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:openDrawer="start">
+    android:orientation="vertical"
+    android:layout_height="match_parent">
 
-    <include
-        layout="@layout/app_bar_main"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="0dp"
+        android:layout_weight="10">
+    </android.support.v4.view.ViewPager>
 
-    <android.support.design.widget.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        app:headerLayout="@layout/nav_header_main"
-        app:menu="@menu/activity_main_drawer" />
+    <LinearLayout
+        android:background="#E53935"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-</android.support.v4.widget.DrawerLayout>
+        <LinearLayout
+            android:gravity="bottom"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:descendantFocusability="beforeDescendants">
+            <ImageButton
+                android:background="#E53935"
+                android:scaleType="fitXY"
+                android:adjustViewBounds="true"
+                android:id="@+id/contactList_button"
+                android:src="@drawable/tab_contact_list"
+                android:layout_gravity="center"
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
+            <TextView
+                android:id="@+id/contactList_text"
+                android:layout_marginTop="5dp"
+                android:textColor="#FAFAFA"
+                android:textSize="12sp"
+                android:layout_gravity="center"
+                android:text="通讯录"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="bottom"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:descendantFocusability="beforeDescendants">
+            <ImageButton
+                android:background="#E53935"
+                android:scaleType="fitXY"
+                android:adjustViewBounds="true"
+                android:id="@+id/message_button"
+                android:layout_gravity="center"
+                android:src="@drawable/tab_message"
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
+            <TextView
+                android:id="@+id/message_text"
+                android:layout_marginTop="5dp"
+                android:textColor="#FAFAFA"
+                android:textSize="12sp"
+                android:layout_gravity="center"
+                android:text="消息"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:gravity="bottom"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:descendantFocusability="beforeDescendants">
+            <ImageButton
+                android:background="#E53935"
+                android:scaleType="fitXY"
+                android:adjustViewBounds="true"
+                android:id="@+id/function_button"
+                android:layout_gravity="center"
+                android:src="@drawable/fuction"
+                android:layout_width="30dp"
+                android:layout_height="30dp"/>
+            <TextView
+                android:id="@+id/function_text"
+                android:layout_marginTop="5dp"
+                android:textColor="#FAFAFA"
+                android:textSize="12sp"
+                android:text="功能"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

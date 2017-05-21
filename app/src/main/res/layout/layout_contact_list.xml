@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:background="#F44336"
+        android:layout_height="?attr/actionBarSize">
+        <TextView
+            android:text="通讯录"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textColor="#FFFFFF"/>
+    </android.support.v7.widget.Toolbar>
+
+    <!--申请与通知-->
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:paddingLeft="10dp"
+        android:id="@+id/invite_notifier"
+        android:clickable="true"
+        android:layout_marginBottom="5dp"
+        android:background="#FAFAFA"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <ImageView
+            android:layout_gravity="center"
+            android:scaleType="fitXY"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/apply"/>
+        <TextView
+            android:textColor="#E53935"
+            android:layout_marginLeft="10dp"
+            android:textSize="20sp"
+            android:gravity="center_vertical"
+            android:text="申请与通知"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </android.support.v7.widget.RecyclerView>
+
+</LinearLayout>

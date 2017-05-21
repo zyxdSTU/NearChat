@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="50dp">
@@ -28,6 +28,36 @@
             android:layout_width="match_parent"
             android:layout_height="49dp"
             android:hint="用户名"
+            />
+    </LinearLayout>
+
+    <View
+        android:layout_marginLeft="30dp"
+        android:layout_width="300dp"
+        android:layout_height="1dp"
+        android:background="#FFCCBC"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <ImageView
+            android:layout_marginLeft="30dp"
+            android:layout_gravity="center"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/smartphone" />
+        <EditText
+            android:textColor="#FAFAFA"
+            android:layout_marginLeft="20dp"
+            android:textColorHint="#FAFAFA"
+            android:background="@null"
+            android:inputType="phone"
+            android:id="@+id/phone_text"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="手机号码"
             />
     </LinearLayout>
 
@@ -77,17 +107,17 @@
             android:layout_gravity="center"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/envelope"/>
+            android:src="@drawable/age"/>
 
         <EditText
-            android:id="@+id/email_text"
+            android:id="@+id/age_text"
             android:textColor="#FAFAFA"
             android:layout_marginLeft="20dp"
             android:textColorHint="#FAFAFA"
             android:background="@null"
             android:layout_width="match_parent"
             android:layout_height="49dp"
-            android:hint="邮箱"
+            android:hint="年龄"
             />
     </LinearLayout>
 
@@ -107,17 +137,47 @@
             android:layout_gravity="center"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/smartphone" />
+            android:src="@drawable/sex"/>
+
         <EditText
+            android:id="@+id/sex_text"
             android:textColor="#FAFAFA"
             android:layout_marginLeft="20dp"
             android:textColorHint="#FAFAFA"
             android:background="@null"
-            android:inputType="phone"
-            android:id="@+id/phone_text"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="手机号码"
+            android:layout_height="49dp"
+            android:hint="性别"
+            />
+    </LinearLayout>
+
+    <View
+        android:layout_marginLeft="30dp"
+        android:layout_width="300dp"
+        android:layout_height="1dp"
+        android:background="#FFCCBC"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <ImageView
+            android:layout_marginLeft="30dp"
+            android:layout_gravity="center"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/personality"/>
+
+        <EditText
+            android:id="@+id/personality_text"
+            android:textColor="#FAFAFA"
+            android:layout_marginLeft="20dp"
+            android:textColorHint="#FAFAFA"
+            android:background="@null"
+            android:layout_width="match_parent"
+            android:layout_height="49dp"
+            android:hint="个性签名"
             />
     </LinearLayout>
 
@@ -199,6 +259,6 @@
         android:textColor="#FAFAFA"
         android:background="@drawable/rect"
         android:layout_width="300dp"
-        android:layout_height="40dp"
+        android:layout_height="35dp"
         android:text="下一步"/>
 </LinearLayout>

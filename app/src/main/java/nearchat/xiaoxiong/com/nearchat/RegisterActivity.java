@@ -18,19 +18,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
+
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
+import nearchat.xiaoxiong.com.nearchat.javabean.User;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
-
-    private String phoneNumber;
-    private String password;
 
     private EditText passwordText;
     private EditText passwordConfirmText;
     private EditText nameText;
     private EditText schoolText;
-    private EditText emailText;
+    private EditText ageText;
+    private EditText sexText;
+    private EditText personalityText;
     private EditText phoneNumberText;
     private Button nextButton;
 
@@ -52,7 +55,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         phoneNumberText = (EditText) findViewById(R.id.phone_text);
         nameText = (EditText) findViewById(R.id.name_text);
         schoolText = (EditText) findViewById(R.id.school_text);
-        emailText = (EditText) findViewById(R.id.email_text);
+        ageText = (EditText) findViewById(R.id.age_text);
+        sexText = (EditText) findViewById(R.id.sex_text);
+        personalityText = (EditText) findViewById(R.id.personality_text);
         nextButton = (Button) findViewById(R.id.next_button);
 
         nextButton.setOnClickListener(this);
@@ -89,7 +94,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         //密码长度不符合要求
         String tempPassword = passwordText.getText().toString().trim();
         String tempPasswordConfirm = passwordConfirmText.getText().toString().trim();
-        if (tempPassword.length() < 6 | tempPassword.length() > 12) return 3;
+        if (tempPassword.length() < 6 || tempPassword.length() > 12) return 3;
 
         //密码确认错误
         if (!tempPassword.equals(tempPasswordConfirm)) return 4;
@@ -98,9 +103,18 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         String tempSchool = schoolText.getText().toString().trim();
         if (tempSchool.equals("")) return 5;
 
-        //邮箱为空
-        String tempEnvelope = emailText.getText().toString().trim();
-        if (tempEnvelope.equals("")) return 6;
+        //年龄格式错误
+        String tempAge = ageText.getText().toString().trim();
+        try {
+            int age = Integer.parseInt(tempAge);
+            if(age <=0 || age >= 100) return 6;
+        }catch(NumberFormatException e) {
+            return 6;
+        }
+
+        //性别格式错误
+        String tempSex = sexText.getText().toString().trim();
+        if(!tempSex.equals("男") && !tempSex.equals("女")) return 7;
 
         return 0;
     }
@@ -110,10 +124,21 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
      */
     public void gotoVerifyActivity() {
         if (allThingRight() == 0) {
-            phoneNumber = phoneNumberText.getText().toString().trim();
-            password = passwordText.getText().toString().trim();
+            String phoneNumber = phoneNumberText.getText().toString().trim();
+            String password = passwordText.getText().toString().trim();
+            String school = schoolText.getText().toString().trim();
+            int age = Integer.parseInt(ageText.getText().toString().trim());
+            String sex = sexText.getText().toString().trim();
+            String personality = personalityText.getText().toString().trim();
+            String nickName = nameText.getText().toString().trim();
+            User user = new User();
+            user.setNickName(nickName); user.setPhoneNumber(phoneNumber);
+            user.setPassword(password); user.setSchool(school);
+            user.setAge(age); user.setSex(sex);
+            user.setPersonality(personality);
+
             Intent intent = new Intent(RegisterActivity.this, VerifyActivity.class);
-            intent.putExtra("phoneNumber", phoneNumber);
+            intent.putExtra("user", new Gson().toJson(user));
             finish();
             startActivity(intent);
         } else {
@@ -134,11 +159,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     Toast.makeText(RegisterActivity.this, "学校不能为空", Toast.LENGTH_SHORT).show();
                     break;
                 case 6:
-                    Toast.makeText(RegisterActivity.this, "邮箱不能为空", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "年龄格式错误", Toast.LENGTH_SHORT).show();
+                case 7:
+                    Toast.makeText(RegisterActivity.this, "性别格式错误", Toast.LENGTH_SHORT).show();
                     break;
                 default:
                     break;
             }
         }
     }
+
 }

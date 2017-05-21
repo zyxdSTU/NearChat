@@ -20,16 +20,28 @@
             android:layout_height="30dp"
             android:src="@drawable/phone"/>
 
-        <EditText
-            android:textColorHint="#FFFFFF"
-            android:textColor="#EEEEEE"
-            android:background="@null"
-            android:paddingLeft="30dp"
-            android:inputType="phone"
-            android:id="@+id/phone_text"
+        <LinearLayout
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
             android:layout_width="250dp"
-            android:layout_height="30dp"
-            android:hint="账户"/>
+            android:layout_height="30dp">
+
+            <EditText
+                android:textColorHint="#FFFFFF"
+                android:textColor="#EEEEEE"
+                android:background="@null"
+                android:paddingLeft="20dp"
+                android:inputType="phone"
+                android:id="@+id/phone_text"
+                android:layout_width="match_parent"
+                android:layout_height="29dp"
+                android:hint="账户"/>
+
+            <View
+                android:layout_width="200dp"
+                android:layout_height="1dp"
+                android:background="#f2d049"/>
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -43,19 +55,29 @@
             android:layout_height="30dp"
             android:src="@drawable/lock"/>
 
-        <EditText
-            android:textColorHint="#FFFFFF"
-            android:textColor="#EEEEEE"
-            android:background="@null"
-            android:id="@+id/password_text"
-            android:maxLength="12"
-            android:digits="0123456789qwertyuioplkjhgfdsazxcvbnm"
-            android:paddingLeft="30dp"
-            android:inputType="textPassword"
+        <LinearLayout
+            android:paddingLeft="10dp"
+            android:orientation="vertical"
             android:layout_width="250dp"
-            android:layout_height="30dp"
-            android:hint="密码"
-            />
+            android:layout_height="30dp">
+            <EditText
+                android:textColorHint="#FFFFFF"
+                android:textColor="#EEEEEE"
+                android:background="@null"
+                android:id="@+id/password_text"
+                android:maxLength="12"
+                android:digits="0123456789qwertyuioplkjhgfdsazxcvbnm"
+                android:paddingLeft="20dp"
+                android:inputType="textPassword"
+                android:layout_width="250dp"
+                android:layout_height="29dp"
+                android:hint="密码"
+                />
+            <View
+                android:layout_width="200dp"
+                android:layout_height="1dp"
+                android:background="#f2d049"/>
+        </LinearLayout>
     </LinearLayout>
 
 

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#FAFAFA"
+    android:layout_marginBottom="2dp"
+    android:layout_width="match_parent"
+    android:layout_height="60dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_marginLeft="20dp"
+        android:clickable="true"
+        android:id="@+id/head_image"
+        android:src="@drawable/head"
+        android:layout_gravity="center_vertical"
+        android:layout_width="45dp"
+        android:layout_height="45dp" >
+    </de.hdodenhof.circleimageview.CircleImageView>
+
+    <LinearLayout
+        android:layout_marginLeft="10dp"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:gravity="center_vertical"
+            android:text="18392476278"
+            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/name_text"/>
+
+
+        <TextView
+            android:gravity="center_vertical"
+            android:text="加个好友"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:id="@+id/reason_text"/>
+    </LinearLayout>
+
+
+    <Button
+        android:layout_marginLeft="35dp"
+        android:layout_gravity="center_vertical"
+        android:background="#E53935"
+        android:textColor="#FAFAFA"
+        android:text="同意"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:id="@+id/accept_button"/>
+
+    <Button
+        android:layout_marginLeft="35dp"
+        android:layout_gravity="center_vertical"
+        android:background="#E53935"
+        android:textColor="#FAFAFA"
+        android:text="拒绝"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:id="@+id/reject_button"/>
+
+</LinearLayout>
