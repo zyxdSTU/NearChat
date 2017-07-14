@@ -1,14 +1,16 @@
 package nearchat.xiaoxiong.com.nearchat.util;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Base64;
 import android.util.Log;
 import android.util.Pair;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -24,30 +26,38 @@ import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMOptions;
 import com.hyphenate.exceptions.HyphenateException;
-import com.hyphenate.util.EMLog;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import nearchat.xiaoxiong.com.nearchat.db.DBManager;
 import nearchat.xiaoxiong.com.nearchat.db.InviteMessageDao;
+import nearchat.xiaoxiong.com.nearchat.db.TrendDao;
 import nearchat.xiaoxiong.com.nearchat.db.UserDao;
+import nearchat.xiaoxiong.com.nearchat.db.WordDao;
 import nearchat.xiaoxiong.com.nearchat.http.HttpManager;
 import nearchat.xiaoxiong.com.nearchat.javabean.Constant;
 import nearchat.xiaoxiong.com.nearchat.javabean.InviteMessage;
 import nearchat.xiaoxiong.com.nearchat.javabean.InviteMessageStatus;
+import nearchat.xiaoxiong.com.nearchat.javabean.Trend;
 import nearchat.xiaoxiong.com.nearchat.javabean.User;
+import nearchat.xiaoxiong.com.nearchat.javabean.Word;
+import nearchat.xiaoxiong.com.nearchat.service.AutoUpdateService;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
+import static nearchat.xiaoxiong.com.nearchat.http.HttpManager.DOWNLOAD_IMAGE;
 import static nearchat.xiaoxiong.com.nearchat.http.HttpManager.SELECT_PART_USER;
 import static nearchat.xiaoxiong.com.nearchat.http.HttpManager.SELECT_USER;
+import static nearchat.xiaoxiong.com.nearchat.http.HttpManager.UPDATE_USER;
 
 /**
  * Created by Administrator on 2017/5/18.
@@ -61,6 +71,8 @@ public class Manager {
     private EMContactListener contactListener;
     private EMConnectionListener connectionListener;
     private LocalBroadcastManager broadcastManager;
+    private BroadcastReceiver broadcastReceiver;
+
 
     private Manager() {}
 
@@ -69,6 +81,10 @@ public class Manager {
             manager = new Manager();
         }
         return manager;
+    }
+
+    public Context getContent() {
+        return mContext;
     }
 
     public void init(Context context) {
@@ -91,6 +107,10 @@ public class Manager {
 
         /**本地广播**/
         broadcastManager = LocalBroadcastManager.getInstance(mContext);
+
+        /**注册广播监听**/
+        registerBroadcastReceiver();
+
     }
 
     private void initOptions() {
@@ -127,6 +147,13 @@ public class Manager {
         EMClient.getInstance().setDebugMode(true);
     }
 
+
+    /**消息提示音**/
+    public void playSound() {
+        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        Ringtone r = RingtoneManager.getRingtone(mContext, notification);
+        r.play();
+    }
 
     private void registerMessageListener() {
         messageListener = new EMMessageListener() {
@@ -165,20 +192,38 @@ public class Manager {
             /**增加联系人**/
             @Override
             public void onContactAdded(String s) {
+                Log.d("MainActivity", "增加联系人");
                 playSound();
                 addContact(s);
-                broadcastManager.sendBroadcast(new Intent(Constant.INVITE_ADD));
             }
 
             /**删除好友**/
             @Override
             public void onContactDeleted(String s) {
+                Log.d("MainActivity", "删除好友");
+                Log.d("MainActivity", s);
+                playSound();
 
+                /**数据库删除**/
+                if((new UserDao().getContact(s)) != null) {
+                    Log.d("MainActivity", "数据库已经删除");
+                    new UserDao().deleteContact(s);
+                }
+
+                /**删除相应对话**/
+                if(EMClient.getInstance().chatManager().getConversation(s) != null) {
+                    Log.d("MainActivity", "会话已经删除");
+                    EMClient.getInstance().chatManager().deleteConversation(s, false);
+                }
+
+                /**通知刷新界面**/
+                broadcastManager.sendBroadcast(new Intent(Constant.INVITE_DELETE));
             }
 
             /**接受到好友邀请**/
             @Override
             public void onContactInvited(String s, String s1) {
+                Log.d("MainActivity", "接受到好友邀请");
                 playSound();
                 InviteMessage inviteMessage = new InviteMessage();
                 inviteMessage.setFrom(s);
@@ -193,9 +238,7 @@ public class Manager {
             /**好友请求被接受**/
             @Override
             public void onFriendRequestAccepted(String s) {
-                playSound();
-                addContact(s);
-                broadcastManager.sendBroadcast(new Intent(Constant.INVITE_ACCEPT));
+                Log.d("MainActivity", "好友请求被接受");
             }
 
             /**好友请求被拒绝**/
@@ -207,6 +250,35 @@ public class Manager {
         EMClient.getInstance().contactManager().setContactListener(contactListener);
     }
 
+    /**添加新好友**/
+    public void addContact(String phoneNumber) {
+        HttpManager.getInstance().sendRequest(SELECT_USER + phoneNumber, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Log.d("MainActivity", "好友添加");
+                String jsonUser = response.body().string();
+                User user = new Gson().fromJson(jsonUser, User.class);
+
+                List<User> userList = new UserDao().getContactList();
+                for(User userTemp : userList) {
+                    if(userTemp.getPhoneNumber().equals(user.getPhoneNumber())) return;
+                }
+                new UserDao().getContactList();
+
+                /**存进数据库**/
+                user.save();
+
+                new UserDao().getContactList();
+                /**通知刷新界面**/
+                broadcastManager.sendBroadcast(new Intent(Constant.INVITE_ACCEPT));
+            }
+        });
+    }
 
     private void registerConnectionListener() {
         connectionListener = new EMConnectionListener() {
@@ -243,11 +315,12 @@ public class Manager {
             public void run() {
                 try {
                     List<String> phoneNumberList = EMClient.getInstance().contactManager().getAllContactsFromServer();
+
                     String jsonPhoneNumber = new Gson().toJson(phoneNumberList);
                     HttpManager.getInstance().sendPost(jsonPhoneNumber, SELECT_PART_USER, new Callback() {
                         @Override
                         public void onFailure(Call call, IOException e) {
-                            Log.d("MainActivity", "加载好友列表失败");
+                            broadcastManager.sendBroadcast(new Intent(Constant.CONTACT_FAILED));
                         }
 
                         @Override
@@ -257,11 +330,16 @@ public class Manager {
                             JsonArray jsonArray = parser.parse(jsonUserList).getAsJsonArray();
                             Gson gson = new Gson();
                             for (JsonElement element : jsonArray) {
-                                /**litepal bug**/
                                 User user = new User();
                                 user = gson.fromJson(element, User.class);
+
+                                /**过滤**/
+                                if(new UserDao().getContact(user.getPhoneNumber()) != null) {
+                                    continue;
+                                }
                                 user.save();
                             }
+                            broadcastManager.sendBroadcast(new Intent(Constant.CONTACT_COMPLETE));
                         }
                     });
                 }catch(HyphenateException e) {
@@ -287,7 +365,6 @@ public class Manager {
                     HttpManager.getInstance().sendPost(jsonPhoneNumber,SELECT_PART_USER, new Callback() {
                         @Override
                         public void onFailure(Call call, IOException e) {
-                            Log.d("MainActivity", "更新好友列表失败");
                         }
 
                         @Override
@@ -315,7 +392,7 @@ public class Manager {
         EMClient.getInstance().logout(true, new EMCallBack() {
             @Override
             public void onSuccess() {
-
+                broadcastManager.sendBroadcast(new Intent(Constant.LOGOUT_SUCCESS));
             }
 
             @Override
@@ -326,28 +403,6 @@ public class Manager {
             @Override
             public void onProgress(int i, String s) {
 
-            }
-        });
-    }
-
-    /**添加新好友**/
-    public void addContact(String phoneNumber) {
-        HttpManager.getInstance().sendRequest(SELECT_USER + phoneNumber, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String jsonUser = response.body().string();
-                User user = new Gson().fromJson(jsonUser, User.class);
-
-                List<User> userList = new UserDao().getContactList();
-                for(User userTemp : userList) {
-                    if(userTemp.getPhoneNumber().equals(user.getPhoneNumber())) return;
-                }
-                user.save();
             }
         });
     }
@@ -396,10 +451,158 @@ public class Manager {
         });
     }
 
+    public void registerBroadcastReceiver() {
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Constant.LOGIN_SUCCESS);
 
-    public void playSound() {
-        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        Ringtone r = RingtoneManager.getRingtone(mContext, notification);
-        r.play();
+
+        broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Intent intentService = new Intent(mContext, AutoUpdateService.class);
+                String action = intent.getAction();
+                if(action.equals(Constant.LOGIN_SUCCESS)) {
+                    /**更新缓存中个人信息**/
+                    updateCurrentUserInfoClient();
+                    /*启动服务*/
+                    mContext.startService(intentService);
+                    return;
+                }
+            }
+        };
+        broadcastManager.registerReceiver(broadcastReceiver, intentFilter);
     }
+
+
+    /**更新当前用户信息**/
+    public void updateCurrentUserInfoClient() {
+        HttpManager.getInstance().sendRequest(SELECT_USER + EMClient.getInstance().getCurrentUser(), new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String jsonCurrentUserInfo = response.body().string();
+                PreferenceManager.getInstance().preferenceManagerRemove("currentUserInfo");
+                PreferenceManager.getInstance().preferenceManagerSave("currentUserInfo", jsonCurrentUserInfo);
+            }
+        });
+    }
+
+
+    /**更新服务器用户信息**/
+    public void updateCurrentUserInfoServer(User user) {
+        String jsonUser = new Gson().toJson(user);
+        HttpManager.getInstance().sendPost(jsonUser, UPDATE_USER, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+            }
+        });
+    }
+
+
+    //通过经纬度计算两者之间路基distance
+    public double gps2m(double lat_a, double lng_a, double lat_b, double lng_b) {
+        /**地球半径**/
+        double EARTH_RADIUS = 6378137.0;
+
+        double radLat1 = (lat_a * Math.PI / 180.0);
+
+        double radLat2 = (lat_b * Math.PI / 180.0);
+
+        double a = radLat1 - radLat2;
+
+        double b = (lng_a - lng_b) * Math.PI / 180.0;
+
+        double s = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a / 2), 2)
+                + Math.cos(radLat1) * Math.cos(radLat2)
+                * Math.pow(Math.sin(b / 2), 2)));
+        s = s * EARTH_RADIUS;
+        s = Math.round(s * 10000) / 10000.0;
+        return s;
+    }
+
+
+    /**重载**/
+    synchronized public void updateImagePreference(String phoneNumber, String imagePath) {
+        try {
+            BufferedInputStream in = new BufferedInputStream(new FileInputStream(imagePath));
+            ByteArrayOutputStream out = new ByteArrayOutputStream(1024);
+
+            byte[] temp = new byte[1024];
+            int size = 0;
+            while ((size = in.read(temp)) != -1) {
+                out.write(temp, 0, size);
+            }
+            byte[] imageByte = out.toByteArray();
+            in.close();
+            out.close();
+            updateImagePreference(phoneNumber, imageByte);
+
+        }catch(FileNotFoundException e) {
+            Log.d("MainActivity", "文件找不到");
+            e.printStackTrace();
+        }catch(IOException e) {
+            Log.d("MainActivity", "文件读写错误");
+            e.printStackTrace();
+        }
+    }
+
+    synchronized public void updateImagePreference(String phoneNumber, byte[] imageByte){
+        String imageString = new String(Base64.encodeToString(imageByte, Base64.DEFAULT));
+        PreferenceManager.getInstance().preferenceManagerSave(phoneNumber, imageString);
+    }
+
+    /**更新缓存中图片数据**/
+    synchronized public void updateContactImage(){
+        List<User> userList = new UserDao().getContactList();
+        for(User user : userList) {
+            final String phoneNumber = user.getPhoneNumber();
+            /**从网络加载进缓存**/
+            HttpManager.getInstance().sendRequest(DOWNLOAD_IMAGE + phoneNumber, new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    Log.d("MainActivity", "从网络加载图片失败");
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                   byte[] imageByte = response.body().bytes();
+                    if(imageByte.length > 0) {
+                        Manager.getInstance().updateImagePreference(phoneNumber, imageByte);
+                    }
+                }
+            });
+        }
+    }
+
+    /*最近动态时间， 最近留言时间*/
+    public long getRecentTrendTime() {
+        List<Trend> trendList = new TrendDao().getAllTrend();
+        long max = 0;
+        if(trendList == null) return max;
+        for(Trend trend : trendList) {
+            if(trend.getCurrentTime() > max) max = trend.getCurrentTime();
+        }
+        return max;
+    }
+
+    public long getRecentWordTime() {
+        List<Word> wordList = new WordDao().getAllWord();
+        long max = 0;
+        if(wordList == null) return max;
+        for(Word word : wordList) {
+            if(word.getCurrentTime() > max) max = word.getCurrentTime();
+        }
+        return max;
+    }
+
+
 }

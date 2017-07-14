@@ -135,7 +135,7 @@ public class VerifyActivity extends AppCompatActivity implements  View.OnClickLi
         };
         SMSSDK.registerEventHandler(eventHandler);
 
-        Toast.makeText(this, "验证码已发送", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "等待获取验证码", Toast.LENGTH_SHORT).show();
         SMSSDK.getVerificationCode("86", phoneNumber);//获取验证码
 
         /**
@@ -196,16 +196,6 @@ public class VerifyActivity extends AppCompatActivity implements  View.OnClickLi
     }
 
 
-    public void backRegisterActivity() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                finish();
-                startActivity(new Intent(VerifyActivity.this, RegisterActivity.class));
-            }
-        });
-    }
-
     /**别人服务器注册**/
     private void registerUserOne() {
         new Thread(new Runnable() {
@@ -247,7 +237,8 @@ public class VerifyActivity extends AppCompatActivity implements  View.OnClickLi
                                     Toast.makeText(VerifyActivity.this, "ml_sign_up_failed code: " + errorCode + ", message:" + message, Toast.LENGTH_LONG).show();
                                     break;
                             }
-                            backRegisterActivity();
+                            finish();
+                            startActivity(new Intent(VerifyActivity.this, RegisterActivity.class));
                         }
                     });
                 } catch (Exception e) {
@@ -261,7 +252,6 @@ public class VerifyActivity extends AppCompatActivity implements  View.OnClickLi
 
     /**自己服务器注册**/
     public void registerUserTwo() {
-        Log.d("MainActivity", "registerUserTwo: ");
         HttpManager.getInstance().sendPost(jsonUser, ADD_USER, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -270,7 +260,8 @@ public class VerifyActivity extends AppCompatActivity implements  View.OnClickLi
                     public void run() {
                         progressDialog.dismiss();
                         Toast.makeText(VerifyActivity.this, "注册失败", Toast.LENGTH_SHORT).show();
-                        backRegisterActivity();
+                        finish();
+                        startActivity(new Intent(VerifyActivity.this, RegisterActivity.class));
                     }
                 });
             }

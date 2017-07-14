@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#fafafa"
+    android:layout_margin="2.5dp"
+    android:layout_width="110dp"
+    android:layout_height="105dp">
+
+    <ImageView
+        android:id="@+id/photo_view"
+        android:scaleType="fitXY"
+        android:src="@drawable/another_head"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

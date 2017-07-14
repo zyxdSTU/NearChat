@@ -21,4 +21,8 @@ public class InviteMessageDao {
     public void updateInviteMessage(InviteMessage inviteMessage) {
         DBManager.getInstance().updateInviteMessage(inviteMessage);
     }
+
+    public void deleteInviteMessage(InviteMessage inviteMessage) {
+        DBManager.getInstance().deleteInviteMessage(inviteMessage);
+    }
 }

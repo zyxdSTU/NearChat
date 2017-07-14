@@ -3,11 +3,13 @@ package nearchat.xiaoxiong.com.nearchat.adapter;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hyphenate.chat.EMClient;
@@ -30,12 +32,23 @@ public class NotifierAdapter extends RecyclerView.Adapter<NotifierAdapter.ViewHo
 
     private List<InviteMessage> mList;
 
-    static class ViewHolder extends RecyclerView.ViewHolder{
+    private int position;
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    static class ViewHolder extends RecyclerView.ViewHolder implements  View.OnCreateContextMenuListener{
         CircleImageView headView;
         TextView nameText;
         TextView reasonText;
         Button acceptButton;
         Button rejectButton;
+        LinearLayout itemView;
 
         public ViewHolder(View view) {
             super(view);
@@ -44,6 +57,15 @@ public class NotifierAdapter extends RecyclerView.Adapter<NotifierAdapter.ViewHo
             reasonText = (TextView) view.findViewById(R.id.reason_text);
             acceptButton = (Button) view.findViewById(R.id.accept_button);
             rejectButton = (Button) view.findViewById(R.id.reject_button);
+            itemView = (LinearLayout) view.findViewById(R.id.item_view);
+            itemView.setOnCreateContextMenuListener(this);
+        }
+
+
+        /**以后优化**/
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+            menu.add(0, ContextMenu.FIRST+1, 0, "删除");
         }
     }
 
@@ -102,6 +124,7 @@ public class NotifierAdapter extends RecyclerView.Adapter<NotifierAdapter.ViewHo
             }
         });
 
+        /**拒绝请求时, 不处理**/
         holder.rejectButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -113,16 +136,19 @@ public class NotifierAdapter extends RecyclerView.Adapter<NotifierAdapter.ViewHo
                 holder.acceptButton.setVisibility(View.GONE);
 
                 InviteMessage inviteMessage = mList.get(holder.getAdapterPosition());
-                try {
-                    EMClient.getInstance().contactManager().declineInvitation(inviteMessage.getFrom());
-                }catch(HyphenateException e) {
-                    e.printStackTrace();
-                }
                 inviteMessage.setStatus(InviteMessageStatus.BEREFUSED);
                 new InviteMessageDao().updateInviteMessage(inviteMessage);
             }
         });
 
+
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener(){
+            @Override
+            public boolean onLongClick(View v) {
+                setPosition(holder.getAdapterPosition());
+                return false;
+            }
+        });
     }
 
     @Override

@@ -6,16 +6,16 @@
 
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
-        android:background="#F44336"
+        android:background="#303537"
         android:layout_height="?attr/actionBarSize">
         <TextView
+            android:textColor="#FAFAFA"
             android:text="通讯录"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textStyle="bold"
-            android:textSize="20sp"
-            android:textColor="#FFFFFF"/>
+            android:textSize="20sp" />
     </android.support.v7.widget.Toolbar>
 
     <!--申请与通知-->
@@ -36,7 +36,7 @@
             android:layout_height="35dp"
             android:src="@drawable/apply"/>
         <TextView
-            android:textColor="#E53935"
+            android:textColor="#4CAF50"
             android:layout_marginLeft="10dp"
             android:textSize="20sp"
             android:gravity="center_vertical"
@@ -45,10 +45,14 @@
             android:layout_height="match_parent" />
     </LinearLayout>
 
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </android.support.v7.widget.RecyclerView>
-
+    </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

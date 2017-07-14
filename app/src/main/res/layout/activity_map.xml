@@ -7,7 +7,7 @@
 
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
-        android:background="#F44336"
+        android:background="#303537"
         android:layout_height="?attr/actionBarSize">
         <TextView
             android:text="附近的人"
@@ -19,16 +19,15 @@
             android:textColor="#FFFFFF"/>
     </android.support.v7.widget.Toolbar>
 
-
-    <EditText
-        android:id="@+id/text_view"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="50dp" />
+        android:layout_height="wrap_content">
 
-    <Button
-        android:text="添加好友"
-        android:id="@+id/add"
-        android:layout_width="match_parent"
-        android:layout_height="50dp" />
-
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </android.support.v7.widget.RecyclerView>
+    </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

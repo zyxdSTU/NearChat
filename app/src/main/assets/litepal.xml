@@ -5,5 +5,7 @@
     <list>
         <mapping class="nearchat.xiaoxiong.com.nearchat.javabean.User"/>
         <mapping class="nearchat.xiaoxiong.com.nearchat.javabean.InviteMessage"/>
+        <mapping class="nearchat.xiaoxiong.com.nearchat.javabean.Trend"/>
+        <mapping class="nearchat.xiaoxiong.com.nearchat.javabean.Word"/>
     </list>
 </litepal>

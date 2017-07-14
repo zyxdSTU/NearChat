@@ -2,12 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#FAFAFA" >
+    android:layout_height="match_parent">
 
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
-        android:background="#F44336"
+        android:background="#303537"
         android:layout_height="?attr/actionBarSize">
         <TextView
             android:text="无名"
@@ -27,23 +26,41 @@
         android:layout_weight="1" />
 
     <LinearLayout
+        android:background="#FAFAFA"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="50dp" >
 
-        <EditText
-            android:id="@+id/input_text"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+        <LinearLayout
+            android:layout_gravity="center"
+            android:orientation="vertical"
             android:layout_weight="1"
-            android:hint="Type something here"
-            android:maxLines="2" />
+            android:layout_width="0dp"
+            android:layout_height="30dp">
 
+            <EditText
+                android:background="@null"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/input_text"
+                android:layout_width="match_parent"
+                android:layout_height="29dp"
+                android:layout_weight="1"
+                android:maxLines="2" />
+
+            <View
+                android:layout_marginLeft="10dp"
+                android:background="#BDBDBD"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+        </LinearLayout>
         <Button
+            android:layout_margin="10dp"
+            android:background="#4CAF50"
+            android:layout_gravity="center"
             android:textColor="#FAFAFA"
-            android:background="#F44336"
             android:id="@+id/send"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Send" />
+            android:textSize="12sp"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:text="发送" />
     </LinearLayout>
 </LinearLayout>

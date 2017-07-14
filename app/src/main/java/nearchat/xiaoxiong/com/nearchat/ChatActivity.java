@@ -85,7 +85,7 @@ public class ChatActivity extends AppCompatActivity {
         msgRecyclerView = (RecyclerView) findViewById(R.id.msg_recycler_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         msgRecyclerView.setLayoutManager(layoutManager);
-        adapter = new MsgAdapter(msgList);
+        adapter = new MsgAdapter(msgList, user );
         msgRecyclerView.setAdapter(adapter);
 
         /**消息监听**/

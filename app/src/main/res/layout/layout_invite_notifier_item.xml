@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="#FAFAFA"
-    android:layout_marginBottom="2dp"
+    android:id="@+id/item_view"
+    android:layout_marginBottom="0.8dp"
     android:layout_width="match_parent"
-    android:layout_height="60dp">
+    android:layout_height="75dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="10dp"
         android:clickable="true"
         android:id="@+id/head_image"
         android:src="@drawable/head"
         android:layout_gravity="center_vertical"
-        android:layout_width="45dp"
-        android:layout_height="45dp" >
+        android:layout_width="50dp"
+        android:layout_height="50dp" >
     </de.hdodenhof.circleimageview.CircleImageView>
 
     <LinearLayout
@@ -22,15 +23,17 @@
         android:layout_height="match_parent">
 
         <TextView
+            android:textSize="16sp"
             android:gravity="center_vertical"
             android:text="18392476278"
             android:layout_height="0dp"
             android:layout_width="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="1.5"
             android:id="@+id/name_text"/>
 
 
         <TextView
+            android:textSize="12sp"
             android:gravity="center_vertical"
             android:text="加个好友"
             android:layout_width="match_parent"
@@ -41,9 +44,9 @@
 
 
     <Button
-        android:layout_marginLeft="35dp"
+        android:layout_marginLeft="25dp"
         android:layout_gravity="center_vertical"
-        android:background="#E53935"
+        android:background="#4CAF50"
         android:textColor="#FAFAFA"
         android:text="同意"
         android:layout_width="60dp"
@@ -51,9 +54,9 @@
         android:id="@+id/accept_button"/>
 
     <Button
-        android:layout_marginLeft="35dp"
+        android:layout_marginLeft="25dp"
         android:layout_gravity="center_vertical"
-        android:background="#E53935"
+        android:background="#4CAF50"
         android:textColor="#FAFAFA"
         android:text="拒绝"
         android:layout_width="60dp"

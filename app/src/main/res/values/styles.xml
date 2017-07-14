@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">#E53935</item>
-        <item name="colorPrimaryDark">#F44336</item>
+        <item name="colorPrimary">#4CAF50</item>
+        <item name="colorPrimaryDark">#212121</item>
         <item name="colorAccent">#f2d049</item>
         <item name="toolbarStyle">@style/NLToolbar</item>
     </style>

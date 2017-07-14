@@ -12,32 +12,32 @@
     </android.support.v4.view.ViewPager>
 
     <LinearLayout
-        android:background="#E53935"
+        android:background="#FAFAFA"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1.0">
 
         <LinearLayout
             android:gravity="bottom"
             android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="1.1"
             android:descendantFocusability="beforeDescendants">
             <ImageButton
-                android:background="#E53935"
+                android:background="#FAFAFA"
                 android:scaleType="fitXY"
                 android:adjustViewBounds="true"
                 android:id="@+id/contactList_button"
-                android:src="@drawable/tab_contact_list"
+                android:src="@drawable/tab_contact"
                 android:layout_gravity="center"
                 android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_height="33dp" />
             <TextView
                 android:id="@+id/contactList_text"
-                android:layout_marginTop="5dp"
-                android:textColor="#FAFAFA"
+                android:layout_marginTop="3dp"
+                android:textColor="#8a8a8a"
                 android:textSize="12sp"
                 android:layout_gravity="center"
                 android:text="通讯录"
@@ -53,7 +53,7 @@
             android:layout_weight="1"
             android:descendantFocusability="beforeDescendants">
             <ImageButton
-                android:background="#E53935"
+                android:background="#FAFAFA"
                 android:scaleType="fitXY"
                 android:adjustViewBounds="true"
                 android:id="@+id/message_button"
@@ -64,7 +64,7 @@
             <TextView
                 android:id="@+id/message_text"
                 android:layout_marginTop="5dp"
-                android:textColor="#FAFAFA"
+                android:textColor="#8a8a8a"
                 android:textSize="12sp"
                 android:layout_gravity="center"
                 android:text="消息"
@@ -81,7 +81,7 @@
             android:layout_weight="1"
             android:descendantFocusability="beforeDescendants">
             <ImageButton
-                android:background="#E53935"
+                android:background="#FAFAFA"
                 android:scaleType="fitXY"
                 android:adjustViewBounds="true"
                 android:id="@+id/function_button"
@@ -92,7 +92,7 @@
             <TextView
                 android:id="@+id/function_text"
                 android:layout_marginTop="5dp"
-                android:textColor="#FAFAFA"
+                android:textColor="#8a8a8a"
                 android:textSize="12sp"
                 android:text="功能"
                 android:layout_gravity="center"

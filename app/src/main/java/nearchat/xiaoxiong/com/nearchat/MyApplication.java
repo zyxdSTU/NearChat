@@ -2,9 +2,15 @@ package nearchat.xiaoxiong.com.nearchat;
 
 import android.app.ActivityManager;
 import android.app.Application;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.baidu.mapapi.SDKInitializer;
 import com.hyphenate.chat.EMChatManager;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMMessage;
@@ -16,6 +22,8 @@ import org.litepal.LitePal;
 import java.util.Iterator;
 import java.util.List;
 
+import nearchat.xiaoxiong.com.nearchat.javabean.Constant;
+import nearchat.xiaoxiong.com.nearchat.service.AutoUpdateService;
 import nearchat.xiaoxiong.com.nearchat.util.Manager;
 
 import static com.hyphenate.chat.adapter.EMACallRtcImpl.TAG;
@@ -43,6 +51,7 @@ public class MyApplication extends Application {
             return;
         }
         LitePal.initialize(mContext);
+        SDKInitializer.initialize(mContext);
         Manager.getInstance().init(mContext);
     }
 

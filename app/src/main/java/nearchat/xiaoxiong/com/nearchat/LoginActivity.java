@@ -2,11 +2,15 @@ package nearchat.xiaoxiong.com.nearchat;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,6 +25,7 @@ import com.hyphenate.chat.EMChatManager;
 import com.hyphenate.chat.EMClient;
 import java.io.IOException;
 
+import nearchat.xiaoxiong.com.nearchat.javabean.Constant;
 import nearchat.xiaoxiong.com.nearchat.util.Manager;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -36,6 +41,8 @@ public class LoginActivity extends AppCompatActivity {
     private String phoneNum;
     private String password;
 
+    private LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(this);
+    private BroadcastReceiver broadcastReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +71,12 @@ public class LoginActivity extends AppCompatActivity {
                 if(phoneNum != null && password != null) {
                     signIn();
                 } else {
-                    Toast.makeText(LoginActivity.this, "用户名和密码不能为空", Toast.LENGTH_SHORT).show();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(LoginActivity.this, "用户名和密码不能为空", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
             }
         });
@@ -88,6 +100,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void signIn() {
         progressDialog.setMessage("正在登陆，请稍后...");
+        progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
         EMClient.getInstance().login(phoneNum, password, new EMCallBack() {
             /**
@@ -98,8 +111,6 @@ public class LoginActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                       progressDialog.dismiss();
-
                         /*加载所有会话到内存*/
                         EMClient.getInstance().chatManager().loadAllConversations();
 
@@ -108,15 +119,6 @@ public class LoginActivity extends AppCompatActivity {
 
                         /**加载好友列表**/
                         Manager.getInstance().loadContactList();
-
-                        /**发送地理位置**/
-
-                        /**启动服务**/
-
-                        /*登录成功跳转界面*/
-                        finish();
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(intent);
                     }
                 });
             }
@@ -184,6 +186,46 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        registerBroadcastReceiver();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        broadcastManager.unregisterReceiver(broadcastReceiver);
+    }
+
+    public void registerBroadcastReceiver() {
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Constant.CONTACT_COMPLETE);
+        intentFilter.addAction(Constant.CONTACT_FAILED);
+
+        broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String action = intent.getAction();
+                if(action.equals(Constant.CONTACT_COMPLETE)) {
+                    /**跳转到主界面**/
+                    progressDialog.dismiss();
+                    broadcastManager.sendBroadcast(new Intent(Constant.LOGIN_SUCCESS));
+                    finish();
+                    Intent intentTemp = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intentTemp);
+                    return;
+                }
+                if(action.equals(Constant.CONTACT_FAILED)) {
+                    progressDialog.dismiss();
+                    Toast.makeText(LoginActivity.this, "登入失败", Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
+
+        broadcastManager.registerReceiver(broadcastReceiver, intentFilter);
     }
 }
 

@@ -6,7 +6,7 @@
 
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
-        android:background="#F44336"
+        android:background="#303537"
         android:layout_height="?attr/actionBarSize">
         <TextView
             android:text="新的好友"

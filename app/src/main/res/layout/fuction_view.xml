@@ -1,94 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="#FAFAFA"
-    android:orientation="vertical"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+<android.support.percent.PercentFrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#607D8Ba0"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <ImageButton
-            android:layout_margin="8dp"
-            android:background="#FAFAFA"
-            android:scaleType="fitXY"
-            android:src="@drawable/contacts_button"
-            android:layout_width="30dp"
-            android:layout_height="30dp" />
+        android:orientation="vertical"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="50dp"
+        android:gravity="center"
+        android:layout_gravity="left|top"
+        app:layout_widthPercent="50%"
+        app:layout_heightPercent="33%">
 
-        <ImageButton
-            android:layout_margin="8dp"
-            android:background="#FAFAFA"
-            android:scaleType="fitXY"
-            android:src="@drawable/place_button"
-            android:id="@+id/map_button"
-            android:layout_width="30dp"
-            android:layout_height="30dp" />
+    <ImageButton
+        android:background="@drawable/circle"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/friend"
+        android:id="@+id/friend_button" />
 
-        <ImageButton
-            android:layout_margin="8dp"
-            android:background="#FAFAFA"
-            android:scaleType="fitXY"
-            android:src="@drawable/file_button"
-            android:layout_width="30dp"
-            android:layout_height="30dp" />
+    <TextView
+        android:layout_margin="10dp"
+        android:textColor="#fafafa"
+        android:textSize="18sp"
+        android:text="朋友圈"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
     </LinearLayout>
 
+
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:orientation="vertical"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="50dp"
+        android:gravity="center"
+        android:layout_gravity="right|top"
+        app:layout_widthPercent="50%"
+        app:layout_heightPercent="33%">
         <ImageButton
-            android:layout_margin="8dp"
-            android:background="#FAFAFA"
-            android:scaleType="fitXY"
-            android:src="@drawable/recycle_button"
-            android:layout_width="30dp"
-            android:layout_height="30dp" />
+            android:background="@drawable/circle"
+            android:id="@+id/near_button"
+            android:src="@drawable/near"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
 
-        <ImageButton
-            android:layout_margin="8dp"
-            android:background="#FAFAFA"
-            android:scaleType="fitXY"
-            android:src="@drawable/heart_button"
-            android:layout_width="30dp"
-            android:layout_height="30dp" />
-
-        <ImageButton
-            android:layout_margin="8dp"
-            android:background="#FAFAFA"
-            android:scaleType="fitXY"
-            android:src="@drawable/settings_button"
-            android:layout_width="30dp"
-            android:layout_height="30dp" />
+        <TextView
+            android:layout_margin="10dp"
+            android:textColor="#fafafa"
+            android:textSize="18sp"
+            android:text="附近的人"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <ImageButton
-            android:layout_margin="8dp"
-            android:background="#FAFAFA"
-            android:scaleType="fitXY"
-            android:visibility="invisible"
-            android:layout_width="30dp"
-            android:layout_height="30dp" />
 
+    <LinearLayout
+        android:layout_marginTop="15dp"
+        android:orientation="vertical"
+        android:layout_marginLeft="15dp"
+        android:gravity="center"
+        app:layout_widthPercent="50%"
+        app:layout_heightPercent="33%"
+        android:layout_gravity="left|center">
         <ImageButton
+            android:background="@drawable/circle"
+            android:id="@+id/heart_button"
+            android:src="@drawable/heart"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
+
+        <TextView
+            android:layout_margin="10dp"
+            android:textColor="#fafafa"
+            android:textSize="18sp"
+            android:text="个人信息"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_marginTop="15dp"
+        android:orientation="vertical"
+        android:layout_marginRight="15dp"
+        android:gravity="center"
+        app:layout_widthPercent="50%"
+        app:layout_heightPercent="33%"
+        android:layout_gravity="right|center">
+        <ImageButton
+            android:background="@drawable/circle"
+            android:id="@+id/setting_button"
+            android:src="@drawable/setting"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
+
+        <TextView
+            android:layout_margin="10dp"
+            android:textColor="#fafafa"
+            android:textSize="18sp"
+            android:text="设置"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_marginBottom="30dp"
+        android:gravity="center"
+        app:layout_widthPercent="100%"
+        app:layout_heightPercent="35%"
+        android:layout_gravity="bottom">
+        <ImageButton
+            android:background="@drawable/circle"
             android:id="@+id/power_button"
-            android:layout_margin="8dp"
-            android:background="#FAFAFA"
-            android:scaleType="fitXY"
-            android:src="@drawable/power_button"
-            android:layout_width="30dp"
-            android:layout_height="30dp" />
-
-        <ImageButton
-            android:layout_margin="8dp"
-            android:background="#FAFAFA"
-            android:scaleType="fitXY"
-            android:visibility="invisible"
-            android:src="@drawable/heart_button"
-            android:layout_width="30dp"
-            android:layout_height="30dp" />
+            android:src="@drawable/exit"
+            android:layout_width="100dp"
+            android:layout_height="100dp"/>
+        <TextView
+            android:layout_margin="10dp"
+            android:textColor="#fafafa"
+            android:textSize="18sp"
+            android:text="退出"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </LinearLayout>
-</LinearLayout>
+
+</android.support.percent.PercentFrameLayout>

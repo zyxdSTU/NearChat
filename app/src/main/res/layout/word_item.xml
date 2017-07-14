@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="25dp">
+
+    <TextView
+        android:clickable="true"
+        android:paddingLeft="5dp"
+        android:gravity="center_vertical"
+        android:text="周宇:"
+        android:textColor="#3F51B5"
+        android:id="@+id/name_text"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:layout_marginLeft="5dp"
+        android:gravity="center_vertical"
+        android:text="正在加载"
+        android:id="@+id/word_text"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" />
+</LinearLayout>

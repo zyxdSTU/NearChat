@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
+    android:layout_marginRight="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/head_view"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/voice"/>
+
+        <TextView
+            android:clickable="true"
+            android:id="@+id/name_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:alpha="0.87"
+            android:text="周宇"
+            android:textColor="#3F51B5"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="60dp"
+        android:orientation="vertical"
+        android:paddingBottom="8dp">
+
+        <TextView
+            android:id="@+id/content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:alpha="0.85"
+            android:ellipsize="end"
+            android:text="说说"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/tv_expand_or_collapse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="全文"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="14sp"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <ImageButton
+            android:background="@android:color/white"
+            android:scaleType="fitXY"
+            android:id="@+id/comment_button"
+            android:layout_width="25dp"
+            android:layout_height="20dp"
+            android:src="@drawable/comment_pressed"
+            android:layout_gravity="right"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="5dp"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:background="#ededed"
+            android:id="@+id/word_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:background="@android:color/white"
+        android:layout_marginLeft="120dp"
+        android:layout_width="match_parent"
+        android:layout_height="30dp">
+
+        <ImageView
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/distance"
+            android:scaleType="fitXY"
+            android:layout_width="20dp"
+            android:layout_height="18dp" />
+
+        <TextView
+            android:background="@android:color/white"
+            android:layout_margin="8dp"
+            android:gravity="center_vertical"
+            android:layout_gravity="center_vertical"
+            android:id="@+id/address_text"
+            android:textSize="12sp"
+            android:text="动态地址: 长安区环北路"
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:alpha="0.12"
+        android:background="@android:color/black"/>
+</LinearLayout>

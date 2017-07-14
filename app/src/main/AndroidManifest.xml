@@ -3,6 +3,7 @@
     package="nearchat.xiaoxiong.com.nearchat">
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
@@ -24,12 +25,23 @@
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
+    <permission android:name="android.permission.BAIDU_LOCATION_SERVICE" />
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/logo"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="Uma8GbSI2s8ZYv5r7i8pgc2UfG7kTCkz" />
+
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" />
+
         <meta-data
             android:name="EASEMOB_APPKEY"
             android:value="1195170514115077#test" />
@@ -69,6 +81,22 @@
         <activity android:name=".VerifyActivity" />
         <activity android:name=".ChatActivity" />
         <activity android:name=".InviteNotifierActivity" />
+        <activity
+            android:name="me.nereo.multi_image_selector.MultiImageSelectorActivity"
+            android:configChanges="orientation|screenSize" />
+
+        <service
+            android:name=".service.AutoUpdateService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity android:name=".UserInfoActivity" />
+        <activity android:name=".NearUserInfoActivity" />
+        <activity android:name=".AddFriendLaterActivity" />
+        <activity android:name=".CurrentUserActivity" />
+        <activity android:name=".EditActivity" />
+        <activity android:name=".PublishTrendActivity" />
+        <activity android:name=".NearTrendActivity" />
         <activity android:name=".MapActivity"></activity>
     </application>
 

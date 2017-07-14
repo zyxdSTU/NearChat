@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:background="#303537"
+        android:layout_height="?attr/actionBarSize">
+        <TextView
+            android:text="申请加好友"
+            android:id="@+id/toName_text"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textColor="#FFFFFF"/>
+    </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        android:id="@+id/layout_one"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <EditText
+            android:paddingLeft="5dp"
+            android:hint="理由备注"
+            android:id="@+id/reason_text"
+            android:layout_gravity="bottom"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:layout_height="40dp" />
+
+        <Button
+            android:id="@+id/add_button"
+            android:textColor="#FAFAFA"
+            android:background="#4caf50"
+            android:layout_gravity="bottom"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:text="加为好友"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#4caf50"/>
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/layout_two"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:src="@drawable/check"
+            android:layout_width="50dp"
+            android:layout_height="60dp" />
+
+        <TextView
+            android:textColor="#4caf50"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:textSize="25sp"
+            android:text="请求已成功发送"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</LinearLayout>

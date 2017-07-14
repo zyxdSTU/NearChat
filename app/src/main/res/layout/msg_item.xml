@@ -3,38 +3,59 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp" >
+    android:padding="5dp" >
 
     <LinearLayout
         android:id="@+id/left_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="left"
-        android:background="@drawable/message_left" >
+        android:layout_gravity="left">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:clickable="true"
+            android:id="@+id/headLeft_image"
+            android:src="@drawable/head"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
 
         <TextView
+            android:layout_gravity="center_vertical"
+            android:text="yyyyyyyyyyyy"
+            android:background="@drawable/message_left"
             android:id="@+id/left_msg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:textColor="#fff" />
-
+            android:textColor="#FFFFFF" />
     </LinearLayout>
+
 
     <LinearLayout
         android:id="@+id/right_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:background="@drawable/message_right" >
+        android:layout_gravity="right">
 
         <TextView
+            android:layout_gravity="center_vertical"
+            android:text="xxxx"
+            android:background="@drawable/message_right"
             android:id="@+id/right_msg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="10dp" />
+            android:textColor="#FFFFFF"/>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:clickable="true"
+            android:layout_gravity="center_vertical"
+            android:id="@+id/headRight_image"
+            android:src="@drawable/head"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
     </LinearLayout>
 
 </LinearLayout>
